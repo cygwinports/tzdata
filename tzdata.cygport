@@ -1,0 +1,40 @@
+NAME="tzdata"
+VERSION=2016d
+RELEASE=1
+CATEGORY="Base"
+SUMMARY="Time Zone Database"
+DESCRIPTION="The Time Zone Database (often called tz or zoneinfo) contains code
+and data that represent the history of local time for many representative
+locations around the globe. It is updated periodically to reflect changes made
+by political bodies to time zone boundaries, UTC offsets, and daylight-saving
+rules."
+HOMEPAGE="http://www.iana.org/time-zones"
+SRC_URI="http://www.iana.org/time-zones/repository/releases/tzdata${VERSION}.tar.gz"
+SRC_DIR=.
+
+ARCH=noarch
+
+src_compile() {
+	local zic=/usr/sbin/zic
+
+	lndirs
+	cd ${B}
+	files="africa antarctica asia australasia europe northamerica southamerica"
+	files+=" pacificnew etcetera backward systemv factory"
+
+	mkdir -p zoneinfo/{,posix,right}
+	${zic} -y ./yearistype -d zoneinfo -L /dev/null -p America/New_York $files
+	${zic} -y ./yearistype -d zoneinfo/posix -L /dev/null $files
+	${zic} -y ./yearistype -d zoneinfo/right -L leapseconds $files
+}
+
+src_install() {
+	cd ${B}
+	dodir /usr/share
+	cp -pr zoneinfo ${D}/usr/share/
+
+	insinto /usr/share/zoneinfo
+	doins iso3166.tab zone.tab zone1970.tab
+
+	dodoc Theory
+}
