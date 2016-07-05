@@ -1,5 +1,5 @@
 NAME="tzdata"
-VERSION=2016e
+VERSION=2016f
 RELEASE=1
 CATEGORY="Base"
 SUMMARY="Time Zone Database"
