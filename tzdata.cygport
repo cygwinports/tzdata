@@ -1,5 +1,5 @@
 NAME="tzdata"
-VERSION=2017b
+VERSION=2017c
 RELEASE=1
 CATEGORY="Base"
 SUMMARY="Time Zone Database"
@@ -19,6 +19,8 @@ src_compile() {
 
 	lndirs
 	cd ${B}
+	cygmake -j1 tzdata.zi
+
 	files="africa antarctica asia australasia europe northamerica southamerica"
 	files+=" pacificnew etcetera backward systemv factory"
 
@@ -34,7 +36,7 @@ src_install() {
 	cp -pr zoneinfo ${D}/usr/share/
 
 	insinto /usr/share/zoneinfo
-	doins iso3166.tab zone.tab zone1970.tab
+	doins iso3166.tab zone.tab zone1970.tab leapseconds tzdata.zi
 
-	dodoc Theory
+	dodoc theory.html
 }
