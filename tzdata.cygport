@@ -1,5 +1,5 @@
 NAME="tzdata"
-VERSION=2018c
+VERSION=2018e
 RELEASE=1
 CATEGORY="Base"
 SUMMARY="Time Zone Database"
@@ -19,7 +19,7 @@ src_compile() {
 
 	lndirs
 	cd ${B}
-	cygmake -j1 VERSION_DEPS= tzdata.zi
+	cygmake -j1 DATAFORM=rearguard VERSION_DEPS= tzdata.zi
 
 	files="africa antarctica asia australasia europe northamerica southamerica"
 	files+=" pacificnew etcetera backward systemv factory"
